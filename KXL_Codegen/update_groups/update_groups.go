@@ -37,6 +37,7 @@ const regLateUpdate string = "public static void RegisterLateUpdateConsumer(ILat
 const unregLateUpdate string = "public static void UnregisterLateUpdateConsumer(ILateUpdatable consumer, UpdateGroup group) {\n"
 
 const groupsFileCs = "../KXL/Core/UpdateGroupsManager.cs"
+const enumsFileCs = "../KXL/Core/Enumerations/UpdateGroup.cs"
 
 func UpdateGroups() {
 	groupsFile, err := ioutil.ReadFile("./data/updategroups.yaml")
@@ -50,24 +51,37 @@ func UpdateGroups() {
 		fmt.Println("Failed unmarshalling updategroups.yaml")
 	}
 
-	os.Truncate(groupsFileCs, 0)
-	file, err := os.OpenFile(groupsFileCs, os.O_CREATE|os.O_WRONLY, 0644)
+	os.Truncate(enumsFileCs, 0)
+	file, err := os.OpenFile(enumsFileCs, os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
-		fmt.Println("Failed opening updategroups.yaml")
+		fmt.Println("Failed opening UpdateGroup.cs")
 	}
 	datawriter := bufio.NewWriter(file)
 
 	var result string
-
-	result += using
-	result += namespace
-	result += usingNamespace
+	result += "namespace KXL.Core.Enumerations\n{\n"
 	result += enumHeader
 
 	for _, g := range groups.Groups {
 		result += fmt.Sprintf("%s,\n", g.Name)
 	}
-	result += "}\n\n"
+	result += "}\n}"
+
+	_, _ = datawriter.WriteString(result)
+	datawriter.Flush()
+	file.Close()
+
+	os.Truncate(groupsFileCs, 0)
+	file, err = os.OpenFile(groupsFileCs, os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		fmt.Println("Failed opening UpdateGroupsManager.cs")
+	}
+	datawriter = bufio.NewWriter(file)
+
+	result = ""
+	result += using
+	result += namespace
+	result += usingNamespace
 
 	result += classHeader
 	result += dictionaryHeader

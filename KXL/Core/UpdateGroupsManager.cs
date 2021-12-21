@@ -7,31 +7,24 @@ namespace KXL.Core
 using Enumerations;
 using Interfaces;
 
-public enum UpdateGroup
-{
-PlayerInput,
-MenuInput,
-Default,
-World,
-Player,
-}
-
 public static class UpdateGroupsManager
 {
 private static Dictionary<UpdateGroup, bool> UpdateGroupsActive = new Dictionary<UpdateGroup, bool>() {
-{UpdateGroup.PlayerInput, true},
+{UpdateGroup.PlayerInput, false},
 {UpdateGroup.MenuInput, false},
 {UpdateGroup.Default, true},
 {UpdateGroup.World, true},
-{UpdateGroup.Player, true},
+{UpdateGroup.PlayerMovement, false},
+{UpdateGroup.PlayerAttack, false},
 };
 
 private static Dictionary<UpdateGroup, bool> UpdateGroupsActiveNext = new Dictionary<UpdateGroup, bool>() {
-{UpdateGroup.PlayerInput, true},
+{UpdateGroup.PlayerInput, false},
 {UpdateGroup.MenuInput, false},
 {UpdateGroup.Default, true},
 {UpdateGroup.World, true},
-{UpdateGroup.Player, true},
+{UpdateGroup.PlayerMovement, false},
+{UpdateGroup.PlayerAttack, false},
 };
 
 public static bool IsGroupActive(UpdateGroup group) {
@@ -45,7 +38,8 @@ public static event Action OnPlayerInputUpdate;
 public static event Action OnMenuInputUpdate;
 public static event Action OnDefaultUpdate;
 public static event Action OnWorldUpdate;
-public static event Action OnPlayerUpdate;
+public static event Action OnPlayerMovementUpdate;
+public static event Action OnPlayerAttackUpdate;
 
 public static void OnUpdate() {
 if (UpdateGroupsActive[UpdateGroup.PlayerInput]) {
@@ -60,8 +54,11 @@ OnDefaultUpdate?.Invoke();
 if (UpdateGroupsActive[UpdateGroup.World]) {
 OnWorldUpdate?.Invoke();
 }
-if (UpdateGroupsActive[UpdateGroup.Player]) {
-OnPlayerUpdate?.Invoke();
+if (UpdateGroupsActive[UpdateGroup.PlayerMovement]) {
+OnPlayerMovementUpdate?.Invoke();
+}
+if (UpdateGroupsActive[UpdateGroup.PlayerAttack]) {
+OnPlayerAttackUpdate?.Invoke();
 }
 
 var keys = new List<UpdateGroup>(UpdateGroupsActive.Keys);
@@ -84,8 +81,11 @@ break;
 case UpdateGroup.World:
 OnWorldUpdate += consumer.OnUpdate;
 break;
-case UpdateGroup.Player:
-OnPlayerUpdate += consumer.OnUpdate;
+case UpdateGroup.PlayerMovement:
+OnPlayerMovementUpdate += consumer.OnUpdate;
+break;
+case UpdateGroup.PlayerAttack:
+OnPlayerAttackUpdate += consumer.OnUpdate;
 break;
 default:
 break;
@@ -106,8 +106,11 @@ break;
 case UpdateGroup.World:
 OnWorldUpdate -= consumer.OnUpdate;
 break;
-case UpdateGroup.Player:
-OnPlayerUpdate -= consumer.OnUpdate;
+case UpdateGroup.PlayerMovement:
+OnPlayerMovementUpdate -= consumer.OnUpdate;
+break;
+case UpdateGroup.PlayerAttack:
+OnPlayerAttackUpdate -= consumer.OnUpdate;
 break;
 default:
 break;
@@ -118,7 +121,8 @@ public static event Action OnPlayerInputLateUpdate;
 public static event Action OnMenuInputLateUpdate;
 public static event Action OnDefaultLateUpdate;
 public static event Action OnWorldLateUpdate;
-public static event Action OnPlayerLateUpdate;
+public static event Action OnPlayerMovementLateUpdate;
+public static event Action OnPlayerAttackLateUpdate;
 
 public static void OnLateUpdate() {
 if (UpdateGroupsActive[UpdateGroup.PlayerInput]) {
@@ -133,8 +137,11 @@ OnDefaultLateUpdate?.Invoke();
 if (UpdateGroupsActive[UpdateGroup.World]) {
 OnWorldLateUpdate?.Invoke();
 }
-if (UpdateGroupsActive[UpdateGroup.Player]) {
-OnPlayerLateUpdate?.Invoke();
+if (UpdateGroupsActive[UpdateGroup.PlayerMovement]) {
+OnPlayerMovementLateUpdate?.Invoke();
+}
+if (UpdateGroupsActive[UpdateGroup.PlayerAttack]) {
+OnPlayerAttackLateUpdate?.Invoke();
 }
 }
 
@@ -152,8 +159,11 @@ break;
 case UpdateGroup.World:
 OnWorldLateUpdate += consumer.OnLateUpdate;
 break;
-case UpdateGroup.Player:
-OnPlayerLateUpdate += consumer.OnLateUpdate;
+case UpdateGroup.PlayerMovement:
+OnPlayerMovementLateUpdate += consumer.OnLateUpdate;
+break;
+case UpdateGroup.PlayerAttack:
+OnPlayerAttackLateUpdate += consumer.OnLateUpdate;
 break;
 default:
 break;
@@ -174,8 +184,11 @@ break;
 case UpdateGroup.World:
 OnWorldLateUpdate -= consumer.OnLateUpdate;
 break;
-case UpdateGroup.Player:
-OnPlayerLateUpdate -= consumer.OnLateUpdate;
+case UpdateGroup.PlayerMovement:
+OnPlayerMovementLateUpdate -= consumer.OnLateUpdate;
+break;
+case UpdateGroup.PlayerAttack:
+OnPlayerAttackLateUpdate -= consumer.OnLateUpdate;
 break;
 default:
 break;
