@@ -117,8 +117,10 @@ func updateInputConsumer(inputGroup *InputGroup) {
 	}
 	datawriter := bufio.NewWriter(file)
 
-	_, _ = datawriter.WriteString("using UnityEngine;\n")
-	_, _ = datawriter.WriteString("namespace KXL.Input\n\n{")
+	_, _ = datawriter.WriteString("using UnityEngine;\n\n")
+	_, _ = datawriter.WriteString("namespace KXL.Input\n{\n")
+	_, _ = datawriter.WriteString("using Core;\n\n")
+	_, _ = datawriter.WriteString(fmt.Sprintf("[AddComponentMenu(\"KXL/Input/%s Input Consumer\")]\n", name))
 	_, _ = datawriter.WriteString(fmt.Sprintf("public class %sInputConsumer : MonoBehaviour\n{\n", name))
 	_, _ = datawriter.WriteString("[SerializeField] CustomBehaviour consumer;\n\n")
 
@@ -132,7 +134,7 @@ func updateInputConsumer(inputGroup *InputGroup) {
 		_, _ = datawriter.WriteString(fmt.Sprintf("if (%s) {\n%sInputGroup.Register%sConsumer(consumer);\n}\n", input.Name, inputGroup.Name, input.Name))
 	}
 
-	_, _ = datawriter.WriteString("}\n}")
+	_, _ = datawriter.WriteString("}\n}\n}")
 
 	datawriter.Flush()
 	file.Close()
