@@ -19,6 +19,12 @@ namespace KXL.Core
         public event Action<IRegistrable> OnDisableEvent;
         public event Action<IRegistrable> OnDestroyEvent;
 
+        protected virtual void Awake() {
+            if(!registerUpdate && !registerLateUpdate) {
+                Debug.LogWarning($"{gameObject.name}: CustomBehaviour - No update function registered!");
+            }
+        }
+
         protected virtual void Start() {
             if (registerUpdate) UpdateGroupsManager.RegisterUpdateConsumer(this, updateGroup);
             if (registerLateUpdate) UpdateGroupsManager.RegisterLateUpdateConsumer(this, lateUpdateGroup);
