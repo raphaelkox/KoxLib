@@ -22,7 +22,6 @@ namespace KXL.Core
         public CanvasGroup ScreenCover;
 
         private void Awake() {
-            GameManager.monoBehaviourHook = this;
             RoomSystem.SetScreenCover(ScreenCover);
 
             //register events
@@ -34,11 +33,15 @@ namespace KXL.Core
         }
 
         private void Update() {
-            UpdateGroupsManager.OnUpdate();
+            UpdateGroupsManager.instance.OnUpdate();
         }
 
         private void LateUpdate() {
-            UpdateGroupsManager.OnLateUpdate();
+            UpdateGroupsManager.instance.OnLateUpdate();
+        }
+
+        private void FixedUpdate() {
+            UpdateGroupsManager.instance.OnFixedUpdate();
         }
     }
 }

@@ -1,6 +1,6 @@
 using System;
 
-namespace KXL.Interfaces
+namespace KXL.Core.Interfaces
 {
     public interface IRegistrable
     {

@@ -7,7 +7,7 @@ using Core;
 [AddComponentMenu("KXL/Input/Menu Input Consumer")]
 public class MenuInputConsumer : MonoBehaviour
 {
-[SerializeField] CustomBehaviour consumer;
+[SerializeField] KXLBehaviour consumer;
 
 [SerializeField] bool Up;
 [SerializeField] bool Down;

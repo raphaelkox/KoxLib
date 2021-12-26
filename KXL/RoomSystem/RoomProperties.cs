@@ -23,8 +23,8 @@ namespace KXL.RoomSystem
             Instantiate(playerPrefab, GetPlayerSpawnPosition(), Quaternion.identity);
             RoomSystem.SetScreenFade(1f);
             RoomSystem.FadeInScreen(() => {
-                UpdateGroupsManager.SetUpdateGroupState(UpdateGroup.Player, true);
-                UpdateGroupsManager.SetUpdateGroupState(UpdateGroup.World, true);
+                UpdateGroupsManager.instance.SetGroupState(UpdateGroupName.Player, true);
+                UpdateGroupsManager.instance.SetGroupState(UpdateGroupName.World, true);
             });
         }
 

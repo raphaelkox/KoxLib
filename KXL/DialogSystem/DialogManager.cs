@@ -49,10 +49,11 @@ namespace KXL.DialogSystem
             playerFlag = freezePlayer;
 
             if (blockControl) {
-                UpdateGroupsManager.SetUpdateGroupState(UpdateGroup.PlayerInput, false);
+                //TODO: set player INPUT GROUP instead
+                UpdateGroupsManager.instance.SetGroupState(UpdateGroupName.Input, false);
             }
-            if (freezeTime) UpdateGroupsManager.SetUpdateGroupState(UpdateGroup.World, false);
-            if (freezePlayer) UpdateGroupsManager.SetUpdateGroupState(UpdateGroup.Player, false);
+            if (freezeTime) UpdateGroupsManager.instance.SetGroupState(UpdateGroupName.World, false);
+            if (freezePlayer) UpdateGroupsManager.instance.SetGroupState(UpdateGroupName.Player, false);
 
             HandleNode(startNode);
         }
@@ -65,7 +66,8 @@ namespace KXL.DialogSystem
                 case DSNodeType.DialogMultipleChoice:
                     if(currentContext != DSDialogContext.DialogBox) {
                         currentContext = DSDialogContext.DialogBox;
-                        UpdateGroupsManager.SetUpdateGroupState(UpdateGroup.MenuInput, true);
+                        //TODO: set menu INPUT GROUP instead
+                        UpdateGroupsManager.instance.SetGroupState(UpdateGroupName.Input, true);
                         MenuInputGroup.OnConfirmInputDown += DialogUI.DialogBox.NextPage;
                     }
 
@@ -147,20 +149,22 @@ namespace KXL.DialogSystem
             DialogUI.DialogBox.Hide();
 
             MenuInputGroup.OnConfirmInputDown -= DialogUI.DialogBox.NextPage;
-            UpdateGroupsManager.SetUpdateGroupState(UpdateGroup.MenuInput, false);
+            //TODO: set menu INPUT GROUP instead
+            UpdateGroupsManager.instance.SetGroupState(UpdateGroupName.Input, false);
 
             if (controlFlag) {
-                UpdateGroupsManager.SetUpdateGroupState(UpdateGroup.PlayerInput, true);
+                //TODO: set player INPUT GROUP instead
+                UpdateGroupsManager.instance.SetGroupState(UpdateGroupName.Input, true);
                 controlFlag = false;
             }
 
             if (timeFlag) {
-                UpdateGroupsManager.SetUpdateGroupState(UpdateGroup.World, true);
+                UpdateGroupsManager.instance.SetGroupState(UpdateGroupName.World, true);
                 timeFlag = false;
             }
 
             if (playerFlag) {
-                UpdateGroupsManager.SetUpdateGroupState(UpdateGroup.Player, true);
+                UpdateGroupsManager.instance.SetGroupState(UpdateGroupName.Player, true);
                 playerFlag = false;
             }
 

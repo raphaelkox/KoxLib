@@ -7,7 +7,7 @@ namespace KXL.Utilities
     using Core;
     using Input = UnityEngine.Input;
 
-    public class TimeScale : CustomBehaviour
+    public class TimeScale : KXLBehaviour
     {
         [SerializeField] float MinTimescale = 0.2f;
         [SerializeField] float MaxTimescale = 1f;

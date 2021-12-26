@@ -5,7 +5,7 @@ using NaughtyAttributes;
 
 namespace KXL.RoomSystem.ScriptableObjects
 {
-    [CreateAssetMenu(fileName = "roomprops", menuName = "Room System/Room Props")]
+    [CreateAssetMenu(fileName = "roomprops", menuName = "KXL/Room System/Room Props")]
     public class RoomPropsSO : ScriptableObject
     {
         [Scene, SerializeField] public string TargetScene;

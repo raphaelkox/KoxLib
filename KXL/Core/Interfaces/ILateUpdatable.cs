@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace KXL.Interfaces
+namespace KXL.Core.Interfaces
 {
-    public interface ILateUpdatable : IRegistrable
+    public interface ILateUpdatable
     {
         void OnLateUpdate();
     }

@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 	"updater/inputs"
-	updategroups "updater/update_groups"
 )
 
 func main() {
@@ -16,8 +15,6 @@ func main() {
 	switch os.Args[1] {
 	case "inputs":
 		inputs.UpdateInputGroups()
-	case "update_groups":
-		updategroups.UpdateGroups()
 	default:
 		fmt.Println("Invalid argument")
 	}

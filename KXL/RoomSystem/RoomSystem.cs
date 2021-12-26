@@ -19,8 +19,8 @@ namespace KXL.RoomSystem
         static float ScreenFadeOutTime = 1f;
 
         public static void Warp(string TargetScene, string TargetSpawn) {
-            UpdateGroupsManager.SetUpdateGroupState(UpdateGroup.Player, false);
-            UpdateGroupsManager.SetUpdateGroupState(UpdateGroup.World, false);
+            UpdateGroupsManager.instance.SetGroupState(UpdateGroupName.Player, false);
+            UpdateGroupsManager.instance.SetGroupState(UpdateGroupName.World, false);
             NextRoomSpawn = TargetSpawn;
             FadeOutScreen(ScreenFadeOutTime, () => { SceneManager.LoadScene(TargetScene); });
         }
